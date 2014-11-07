@@ -41,3 +41,7 @@ README
 ChangeLog
 /glib-lcov.info
 /glib-lcov/
+config.status.lineno
+b
+m4
+*.pyc
