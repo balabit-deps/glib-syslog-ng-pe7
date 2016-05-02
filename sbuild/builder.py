@@ -1,7 +1,8 @@
 from AutotoolsBuilder import AutotoolsBuilder
 
 def get_builder():
-    return AutotoolsBuilder(get_default_config_opts())
+    extra_env = {"NOCONFIGURE" : "1"}
+    return AutotoolsBuilder(get_default_config_opts(), extra_env=extra_env)
 
 def get_default_config_opts():
     try:
