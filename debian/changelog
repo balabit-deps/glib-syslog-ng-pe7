@@ -1,3 +1,9 @@
+glib (2.32.4-1.syslogng70) syslogng70; urgency=medium
+
+  * upgrade glib to 2.32.4
+
+ -- Tibor Benke <btibi@btibi>  Mon, 02 May 2016 14:03:18 +0200
+
 glib (2.14.6.syslogng30) syslogng30; urgency=low
 
   * Modified assembler instruction in gatomi.c,
