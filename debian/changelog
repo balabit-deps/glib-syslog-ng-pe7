@@ -1,3 +1,9 @@
+glib (2.32.4-2.syslogng70) syslogng70; urgency=medium
+
+  * Add libxml2 as a dependency
+
+ -- Tibor Benke <btibi@btibi>  Tue, 02 Aug 2016 15:49:47 +0200
+
 glib (2.32.4-1.syslogng70) syslogng70; urgency=medium
 
   * upgrade glib to 2.32.4
