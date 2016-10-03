@@ -1,0 +1,7 @@
+name: glib
+builder:
+  name: AutotoolsBuilder
+  environments:
+    NOCONFIGURE: "1"
+platforms:
+  - linux-glibc2.11/amd64
