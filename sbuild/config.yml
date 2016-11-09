@@ -1,6 +1,7 @@
 name: glib
 builder:
   name: AutotoolsBuilder
+  flags: "make-dist-need-make"
   environments:
     NOCONFIGURE: "1"
 platforms:
