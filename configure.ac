@@ -3571,15 +3571,6 @@ gio/win32/Makefile
 gio/tests/Makefile
 gio/tests/gdbus-object-manager-example/Makefile
 po/Makefile.in
-docs/Makefile
-docs/reference/Makefile
-docs/reference/glib/Makefile
-docs/reference/glib/version.xml
-docs/reference/gobject/Makefile
-docs/reference/gobject/version.xml
-docs/reference/gio/Makefile
-docs/reference/gio/gdbus-object-manager-example/Makefile
-docs/reference/gio/version.xml
 tests/Makefile
 tests/gobject/Makefile
 tests/refcount/Makefile

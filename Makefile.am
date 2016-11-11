@@ -6,7 +6,7 @@ include $(top_srcdir)/Makefile.decl
 
 ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
 
-SUBDIRS = . m4macros glib gmodule gthread gobject gio tests po docs
+SUBDIRS = . m4macros glib gmodule gthread gobject gio tests po
 DIST_SUBDIRS = $(SUBDIRS) build
 
 bin_SCRIPTS = glib-gettextize
@@ -62,8 +62,7 @@ BUILT_EXTRA_DIST = 		\
 	README			\
 	INSTALL			\
 	ChangeLog		\
-	config.h.win32		\
-	gtk-doc.make
+	config.h.win32
 
 CONFIGURE_DEPENDENCIES = acglib.m4
 
