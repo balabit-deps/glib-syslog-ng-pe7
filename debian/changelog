@@ -1,3 +1,9 @@
+glib (2.32.4-3.syslogng70) syslogng70; urgency=medium
+
+  * make it possible compile it in zbs
+
+ -- Viktor Juhasz <viktor.juhasz@balabit.com>  Fri, 11 Nov 2016 09:28:06 +0100
+
 glib (2.32.4-1.syslogng70) syslogng70; urgency=medium
 
   * upgrade glib to 2.32.4
