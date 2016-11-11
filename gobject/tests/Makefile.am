@@ -8,7 +8,6 @@ else
   glib_genmarshal=$(top_builddir)/gobject/glib-genmarshal
 endif
 
-noinst_PROGRAMS  = $(TEST_PROGS)
 LDADD = ../libgobject-2.0.la $(top_builddir)/gthread/libgthread-2.0.la $(top_builddir)/glib/libglib-2.0.la
 
 TEST_PROGS += 		\

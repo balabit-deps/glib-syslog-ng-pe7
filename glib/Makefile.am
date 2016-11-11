@@ -58,7 +58,6 @@ endif
 endif
 
 MIRRORING_TAB_SOURCE = 				\
-	glib-mirroring-tab/Makefile 		\
 	glib-mirroring-tab/gen-mirroring-tab.c	\
 	glib-mirroring-tab/packtab.h		\
 	glib-mirroring-tab/packtab.c

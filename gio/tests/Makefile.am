@@ -15,9 +15,6 @@ INCLUDES = 			\
 	$(DBUS1_CFLAGS)		\
 	-DSRCDIR=\""$(srcdir)"\"
 
-noinst_PROGRAMS = $(TEST_PROGS) $(SAMPLE_PROGS)
-noinst_DATA = $(MISC_STUFF)
-
 progs_ldadd     = 					\
 	$(top_builddir)/glib/libglib-2.0.la 		\
 	$(top_builddir)/gthread/libgthread-2.0.la	\
@@ -575,13 +572,6 @@ EXTRA_DIST += \
 	test3.txt			\
 	test4.gresource.xml		\
 	$(NULL)
-
-MISC_STUFF = test.mo test.gresource
-
-test.mo: de.po
-	$(MSGFMT) -o test.mo $(srcdir)/de.po; \
-	$(MKDIR_P) de/LC_MESSAGES; \
-	cp -f test.mo de/LC_MESSAGES
 
 if CROSS_COMPILING
   glib_compile_resources=$(GLIB_COMPILE_RESOURCES)
