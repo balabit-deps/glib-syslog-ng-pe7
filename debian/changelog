@@ -1,3 +1,9 @@
+glib (2.48.2-1.syslogng70) syslogng70; urgency=medium
+
+  * upgrade glib to 2.48.2
+
+ -- kokan <peter.kokai@quest.com>  Fri, 04 Oct 2019 12:33:54 +0200
+
 glib (2.32.4-1.syslogng70) syslogng70; urgency=medium
 
   * upgrade glib to 2.32.4
