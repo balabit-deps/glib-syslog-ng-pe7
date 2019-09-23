@@ -2332,7 +2332,7 @@ AS_IF([ test "x$with_pcre" = xsystem], [
   AC_CACHE_CHECK([for Unicode support in PCRE],glib_cv_pcre_has_unicode,[
                   glib_save_CFLAGS="$CFLAGS"
                   glib_save_LIBS="$LIBS"
-                  CFLAGS="$CFLAGS $PCRE_CFLAGS" LIBS="$PCRE_LIBS"
+                  CFLAGS="$CFLAGS $PCRE_CFLAGS" LIBS="-Wl,-Bstatic $PCRE_LIBS -Wl,-Bdynamic"
                   AC_TRY_RUN([#include <pcre.h>
                               int main () {
                                 int support;
