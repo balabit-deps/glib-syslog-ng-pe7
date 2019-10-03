@@ -54,7 +54,7 @@ $(STAMPDIR)/stamp-configure: $(STAMPDIR)/stamp-setup
 
 build:  $(STAMPDIR)/stamp-build
 $(STAMPDIR)/stamp-build: $(STAMPDIR)/stamp-configure 
-	$(LD_LIB) $(MAKE) 
+	$(LD_LIB) $(MAKE) V=1
 	touch $@
 install: $(STAMPDIR)/stamp-install
 $(STAMPDIR)/stamp-install: $(STAMPDIR)/stamp-build
