@@ -1,6 +1,7 @@
 #!/usr/local/bin/make -f                                                                                                                                           
 STAMPDIR=tgz2build/stamps
 
+CFLAGS=-O2
 CONFIGURE_OPTS := --prefix $(ZBS_PREFIX) --disable-static --enable-shared --disable-gtk-doc --with-libiconv=gnu --enable-debug
 CONFIGURE_CMD = ./configure $(CONFIGURE_OPTS)
 LD_LIB =
