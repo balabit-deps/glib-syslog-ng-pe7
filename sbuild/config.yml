@@ -7,4 +7,3 @@ builder:
   prepare_dist_hook: "/bin/sh -c 'make all'"
 platforms:
   - linux-glibc2.11/amd64
-  - ubuntu-bionic/amd64
