@@ -11,7 +11,7 @@ variables:
 
 validate-vars:
   stage: validate-vars
-  image: docker.balabit/syslog-ng/base-centos6:v10
+  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v1"
   script:
     - if [ -z "$ZBS_BRANCH" -a "$SNAPSHOT" = "yes" ]; then exit 1; fi
     - if [ "$SNAPSHOT" = "no" -a -z "$RELEASE_VERSION" ]; then exit 1; fi;
@@ -22,40 +22,19 @@ validate-vars:
 
 build-glib:
   stage: build-glib
-  image: docker.balabit/syslog-ng/base-centos6:v10
+  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v1"
   before_script:
     - export VERSION=2.48.2-3.syslogng70
     - export DIST=linux-glibc2.11
     - export ARCH=amd64
   script:
-    # the following lines changes the default
-    #  python -> 2.7
-    #  gcc    -> 7.3
-    - source /opt/rh/devtoolset-7/enable
-    - source /opt/rh/python27/enable
-
-    - git clone git@git.balabit:syslog-ng/pe-builder-image.git
+    - git clone https://git.balabit/syslog-ng/pe-builder-image.git
     - if [ ! -z "$RELEASE_VERSION" ]; then export SNAPSHOT=no ; fi
     - if [ "$SNAPSHOT" = "yes" ]; then export SNAPSHOT_VERSION=$(date +'%Y%m%d+%H%M'); export VERSION="${VERSION}+${SNAPSHOT_VERSION}"; fi
     - if [ "$SNAPSHOT" = "no" ]; then export VERSION="$RELEASE_VERSION"; fi
     - if [ "$SNAPSHOT" = "yes" ]; then export FULL_ZBS_BRANCH="syslog-ng-pe-7.0-$ZBS_BRANCH"; else export FULL_ZBS_BRANCH="syslog-ng-7.0"; fi
-    - cd pe-builder-image && cat ci-data.env.tpl | envsubst | tee ci-data.env && export `cat ci-data.env` && cd -
 
-    - export NAME=bootstrap
-    - cat pe-builder-image/job.yml.tpl | envsubst | tee job.yml
-    - pe-builder-image/playbook/roles/balabit.builder_cli/files/builder.py job.yml
-
-    - export PKG_CONFIG_PATH="/opt/syslog-ng/lib/pkgconfig:$PKG_CONFIG_PATH"
-    - export LIBRARY_PATH="$LIBRARY_PATH:/opt/syslog-ng/lib"
-    - export EXTRA_CFLAGS="-isystem /opt/syslog-ng/include -Wl,-R/opt/syslog-ng/lib"
-
-    # glib
-    - sh autogen.sh
-    - ./configure --prefix=/opt/syslog-ng/ --disable-static --enable-shared --disable-gtk-doc --with-libiconv=gnu --enable-debug CFLAGS=-O2
-    - make all
-    #- make check # fails, but it failed in ZBS as well and were disabled
-    - make DESTDIR=$CI_PROJECT_DIR/artifacts/=install/ install
-
+    - ./release.sh
 
     - mkdir zbs_files && cp tgz2build/*.files zbs_files/
     - pe-builder-image/scripts/prepare-binaries.sh glib
@@ -67,4 +46,3 @@ build-glib:
     paths:
       - artifacts
       - pe-builder-image/ci-data.env
-

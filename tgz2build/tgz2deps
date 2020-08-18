@@ -1,3 +1,5 @@
 libffi
 libpcre3
 libpcre3-dev
+libiconv
+libiconv-dev
