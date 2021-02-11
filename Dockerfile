@@ -15,6 +15,7 @@ RUN wget --no-check-certificate http://www.kernel.org/pub/software/scm/git/git-2
 RUN cd /usr/src && tar xvf git-2.28.0.tar.gz
 RUN cd /usr/src/git-2.28.0 && ./configure && make -j4 && make install && cd / && rm -rf /usr/src/git-2.28.0/
 RUN git config --global http.sslVerify false
+RUN mkdir /root/.ssh/
 RUN ssh-keyscan -H git.balabit >> /root/.ssh/known_hosts
 
 RUN cd /usr/src && git clone https://git.balabit/tools/zbs.git
