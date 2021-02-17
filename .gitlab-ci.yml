@@ -11,7 +11,7 @@ variables:
 
 validate-vars:
   stage: validate-vars
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v1"
+  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v2"
   script:
     - if [ -z "$ZBS_BRANCH" -a "$SNAPSHOT" = "yes" ]; then exit 1; fi
     - if [ "$SNAPSHOT" = "no" -a -z "$RELEASE_VERSION" ]; then exit 1; fi;
@@ -22,7 +22,7 @@ validate-vars:
 
 build-glib:
   stage: build-glib
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v1"
+  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v2"
   before_script:
     - export VERSION=2.48.2-5.syslogng70
     - export DIST=linux-glibc2.11
