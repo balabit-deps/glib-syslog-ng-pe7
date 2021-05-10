@@ -20,6 +20,6 @@ RUN ssh-keyscan -H git.balabit >> /root/.ssh/known_hosts
 
 RUN apt-get install -y flex bison
 
-RUN cd /usr/src && git clone https://git.balabit/tools/zbs.git
+COPY zbs /usr/src/zbs
 RUN ln -s /usr/src/zbs/lib/zbs-get.py /usr/local/bin/zbs-get
-COPY sources.py /usr/src/zbs/lib/
+COPY sources.py /usr/src/zbs/lib/sources.py

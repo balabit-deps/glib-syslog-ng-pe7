@@ -2,12 +2,29 @@
 # set RELEASE_VERSION when creating a release, for example: RELEASE_VERSION=0.0.4
 
 stages:
+  - create-build-container
   - validate-vars
   - build-glib
 
 variables:
   GIT_DEPTH: 1
 
+
+create-build-container:
+  # note: This step probably won't work on GitLab CI. (It requires a really long build time, which is causing a timeout).
+  # So this step is just an example for the manual build process.
+  stage: create-build-container
+  tags:
+    - container-builder
+  when: manual
+  before_script:
+    - ./git-use-gitlab-credentials.sh
+  script:
+    - git clone git@git.balabit:tools/zbs.git
+    - docker build --rm --no-cache -t docker.balabit/syslog-ng/glib-glibc2.11-builder:v3 .
+    - docker login -u ${BUILDER_USER} -p ${BUILDER_PASS} docker.balabit
+    - docker push docker.balabit/syslog-ng/glib-glibc2.11-builder:v3
+    - docker logout
 
 validate-vars:
   stage: validate-vars
