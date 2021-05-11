@@ -7,6 +7,7 @@ stages:
   - build-glib
 
 variables:
+  DOCKER_IMAGE_VERSION: "v4"
   GIT_DEPTH: 1
 
 
@@ -21,14 +22,14 @@ create-build-container:
     - ./git-use-gitlab-credentials.sh
   script:
     - git clone git@git.balabit:tools/zbs.git
-    - docker build --rm --no-cache -t docker.balabit/syslog-ng/glib-glibc2.11-builder:v3 .
+    - docker build --rm --no-cache -t docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION} .
     - docker login -u ${BUILDER_USER} -p ${BUILDER_PASS} docker.balabit
-    - docker push docker.balabit/syslog-ng/glib-glibc2.11-builder:v3
+    - docker push docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
     - docker logout
 
 validate-vars:
   stage: validate-vars
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v3"
+  image: docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
   script:
     - if [ -z "$ZBS_BRANCH" -a "$SNAPSHOT" = "yes" ]; then exit 1; fi
     - if [ "$SNAPSHOT" = "no" -a -z "$RELEASE_VERSION" ]; then exit 1; fi;
@@ -39,7 +40,7 @@ validate-vars:
 
 build-glib:
   stage: build-glib
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v3"
+  image: docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
   before_script:
     - export VERSION=2.48.2-5.syslogng70
     - export DIST=linux-glibc2.11
