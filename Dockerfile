@@ -6,12 +6,12 @@ ENV GIT_DEPTH 1
 
 RUN sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y autoconf libtool ssh sshpass libcurl4-openssl-dev wget xz-utils zlib1g-dev gettext gcc g++ make libmpc-dev libmpfr-dev
-RUN wget http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz && mv /gcc-7.3.0.tar.xz /usr/src/
+COPY gcc-7.3.0.tar.xz /usr/src/gcc-7.3.0.tar.xz
 RUN cd /usr/src && tar xvf gcc-7.3.0.tar.xz
 RUN mkdir -p /usr/src/gcc-7.3.0/build && cd /usr/src/gcc-7.3.0/build && ../configure --disable-multilib --enable-languages=c,c++ && make && make install && cd / && rm -rf /usr/src/gcc-7.3.0/
 RUN update-alternatives --install /usr/bin/cc cc /usr/local/bin/gcc 100 && update-alternatives --set cc /usr/local/bin/gcc
 
-RUN wget --no-check-certificate http://www.kernel.org/pub/software/scm/git/git-2.28.0.tar.gz -P /usr/src
+COPY git-2.28.0.tar.gz /usr/src/git-2.28.0.tar.gz
 RUN cd /usr/src && tar xvf git-2.28.0.tar.gz
 RUN cd /usr/src/git-2.28.0 && ./configure && make -j4 && make install && cd / && rm -rf /usr/src/git-2.28.0/
 RUN git config --global http.sslVerify false
