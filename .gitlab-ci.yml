@@ -2,16 +2,33 @@
 # set RELEASE_VERSION when creating a release, for example: RELEASE_VERSION=0.0.4
 
 stages:
+  - create-build-container
   - validate-vars
   - build-glib
 
 variables:
+  DOCKER_IMAGE_VERSION: "v5"
   GIT_DEPTH: 1
 
 
+create-build-container:
+  # note: This step probably won't work on GitLab CI. (It requires a really long build time, which is causing a timeout).
+  # So this step is just an example for the manual build process.
+  stage: create-build-container
+  tags:
+    - container-builder
+  when: manual
+  before_script:
+    - ./git-use-gitlab-credentials.sh
+  script:
+    - ./build-docker-image.sh ${DOCKER_IMAGE_VERSION}
+    - docker login -u ${BUILDER_USER} -p ${BUILDER_PASS} docker.balabit
+    - docker push docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
+    - docker logout
+
 validate-vars:
   stage: validate-vars
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v3"
+  image: docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
   script:
     - if [ -z "$ZBS_BRANCH" -a "$SNAPSHOT" = "yes" ]; then exit 1; fi
     - if [ "$SNAPSHOT" = "no" -a -z "$RELEASE_VERSION" ]; then exit 1; fi;
@@ -22,13 +39,14 @@ validate-vars:
 
 build-glib:
   stage: build-glib
-  image: "docker.balabit/syslog-ng/glib-glibc2.11-builder:v3"
+  image: docker.balabit/syslog-ng/glib-glibc2.11-builder:${DOCKER_IMAGE_VERSION}
   before_script:
     - export VERSION=2.48.2-5.syslogng70
     - export DIST=linux-glibc2.11
     - export ARCH=amd64
+    - ./git-use-gitlab-credentials.sh
   script:
-    - git clone https://git.balabit/syslog-ng/pe-builder-image.git
+    - git clone git@git.balabit:syslog-ng/pe-builder-image.git
     - if [ ! -z "$RELEASE_VERSION" ]; then export SNAPSHOT=no ; fi
     - if [ "$SNAPSHOT" = "yes" ]; then export SNAPSHOT_VERSION=$(date +'%Y%m%d+%H%M'); export VERSION="${VERSION}+${SNAPSHOT_VERSION}"; fi
     - if [ "$SNAPSHOT" = "no" ]; then export VERSION="$RELEASE_VERSION"; fi
