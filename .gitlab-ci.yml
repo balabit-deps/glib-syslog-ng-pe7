@@ -7,7 +7,7 @@ stages:
   - build-glib
 
 variables:
-  DOCKER_IMAGE_VERSION: "v4"
+  DOCKER_IMAGE_VERSION: "v5"
   GIT_DEPTH: 1
 
 
