@@ -46,3 +46,6 @@ README
 ChangeLog
 /glib-lcov.info
 /glib-lcov/
+
+sbuild/*
+!sbuild/config.yml

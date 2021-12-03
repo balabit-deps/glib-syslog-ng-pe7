@@ -1,0 +1,22 @@
+source="glib"
+version=2.48.2-pe-1
+dependencies=(
+  'zlib' 'zlib-dev'
+  'libffi'
+  'libpcre3' 'libpcre3-dev'
+  'libiconv' 'libiconv-dev'
+)
+
+bootstrap() {
+  NOCONFIGURE=1 ./autogen.sh
+}
+
+build() {
+  cd "${build_dir}"
+  ${src_dir}/configure --prefix="${prefix}" --disable-static --enable-shared --disable-gtk-doc --with-libiconv=gnu --enable-debug
+  make all
+}
+
+install() {
+   make -C "${build_dir}" DESTDIR="${dest_dir}" install
+}
